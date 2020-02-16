@@ -4,10 +4,13 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -64,6 +67,21 @@ public class Login extends JFrame {
       //********* Add JPanel ke dalam Frame **********
         add(panel, BorderLayout.CENTER); // Panggil JPanel ke Frame utama
         setVisible(true);
+        
+        btnLogin.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String uname = text_username.getText();
+				String pass = String.valueOf(text_password.getPassword());
+				
+				Koneksi conn = new Koneksi();
+				if (conn.masuk(uname, pass) == true) {
+					System.out.println("Berhasil");
+				} else {
+					System.out.println("Gagal");
+				}
+			}
+		});
 	}
 
 }
