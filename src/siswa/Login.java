@@ -3,7 +3,6 @@ package siswa;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -16,6 +15,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 public class Login extends JFrame {
+
+	private static final long serialVersionUID = 588621125875581234L;
 	
 	JPanel panel;
 
@@ -76,9 +77,11 @@ public class Login extends JFrame {
 				
 				Koneksi conn = new Koneksi();
 				if (conn.masuk(uname, pass) == true) {
-					System.out.println("Berhasil");
+					JOptionPane.showMessageDialog(null, "Login berhasil");
+					dispose();
+					new FormInput();
 				} else {
-					System.out.println("Gagal");
+					JOptionPane.showMessageDialog(null, "Login gagal");
 				}
 			}
 		});
