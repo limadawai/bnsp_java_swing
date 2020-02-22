@@ -43,7 +43,7 @@ public class Koneksi {
 	        st.setString(2, nama);
 	        st.setString(3, prodi);
 	        st.setString(4, alamat);
-	        ResultSet rs = st.executeQuery();
+	        st.execute();
 	        connection.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -52,30 +52,39 @@ public class Koneksi {
 		}
 	}
 	
-	public ArrayList<String> record() {
-		List result = new ArrayList<String>();
+	public void update(String nama, String prodi, String alamat, String nim) {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			connection = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/bnsp?autoreconnect=true&useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false","root", "root");
-			String sql = "SELECT * FROM siswa";
+			String sql = "UPDATE siswa set nama = ?, prog_studi = ?, alamat = ? WHERE nim = ?";
 	        PreparedStatement st = (PreparedStatement) connection.prepareStatement(sql);
-	        ResultSet rs = st.executeQuery();
-	        while (rs.next()) {
-	        	String nim = rs.getString("nim");
-	        	String nama = rs.getString("nama");
-	        	String prodi = rs.getString("prog_studi");
-	        	String alamat = rs.getString("alamat");
-	        	result.add(nim);
-	        	result.add(nama);
-	        	result.add(prodi);
-	        	result.add(alamat);
-	        }
+	        st.setString(1, nama);
+	        st.setString(2, prodi);
+	        st.setString(3, alamat);
+	        st.setString(4, nim);
+	        st.execute();
+	        connection.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		return (ArrayList<String>) result;
+	}
+	
+	public void delete(String id) {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			connection = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/bnsp?autoreconnect=true&useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false","root", "root");
+			String sql = "DELETE FROM siswa WHERE nim = ?";
+	        PreparedStatement st = (PreparedStatement) connection.prepareStatement(sql);
+	        st.setString(1, id);
+	        st.executeUpdate();
+	        connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
